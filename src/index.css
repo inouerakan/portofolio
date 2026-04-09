@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+html, body {
+  overflow-x: hidden;
+}
+
+@theme {
+  --color-dark: oklch(21% 0.006 285.885);
+  --color-dark-100: oklch(27.4% 0.006 286.033);
+  --color-light: oklch(98.5% 0 0);
+  --color-light-100: oklch(70.5% 0.015 286.067);
+
+  --font-sans: 'Montserrat Alternates', sans;
+  --font-serif: 'Playfair', sans;
+
+  --text-biggest: 8rem;
+}
