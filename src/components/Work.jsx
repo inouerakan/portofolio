@@ -18,7 +18,7 @@ function WorkCard({imageOnBottom, name, description}) {
 
 export default function Work() {
     return (
-        <div className="work-container h-svh min-w-full flex bg-light text-dark pl-14 pr-14 gap-14">
+        <div className="work-container h-dvh min-w-full flex bg-light text-dark pl-14 pr-14 gap-14">
             <WorkCard name="Bell's After Dark" description="A school group game project with a horror theme, using Unity as the engine. In that group, I served as the programmer, where I collaborated with the design team to translate complex narrative elements into functional game systems and interactive environments."/>
             <WorkCard imageOnBottom={true} name="This Portofolio" description="A personal branding platform built with React and Tailwind CSS to showcase my software engineering projects. I implemented GSAP for advanced animations and focused on creating a highly responsive, dark-themed interface that reflects my design aesthetic."/>
             {/* <WorkCard name="Bell's After Dark" description="Inspired by [inspiration], [Project Name] combines a [aesthetic style] interface with modern functionality. Built using [tech stack], I focused on high-quality typography and intuitive navigation to create a digital space that is both beautiful and functional."/> */}
