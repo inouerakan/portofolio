@@ -1,5 +1,5 @@
 import Hero from "./components/Hero";
-import Navbar from "./components/Navbar";
+import SectionIndicator from "./components/SectionIndicator";
 import Main from "./components/Main";
 import Work from "./components/Work";
 import gsap from "gsap";
@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { SplitText } from "gsap/all";
 import { ScrollTrigger } from "gsap/all";
+import { isDesktop, isMobile } from "react-device-detect";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +20,33 @@ function App() {
   const workRef = useRef();
 
   useGSAP(() => {
+    let mm = gsap.matchMedia();
+    mm.add({
+      isMobile: "(max-width: 767px)",
+      isDesktop: "(min-width: 768px)"
+    }, (context) => {
+      let {isMobile} = context.conditions;
+
+      const workInTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: document.body,
+          start: "2400 top",
+          end: "+=800",
+          scrub: 1,
+        }
+      })
+
+      
+      // Main out, Work in
+      workInTl
+        .fromTo(mainRef.current, {scale: 1}, {scale: .9})
+        .fromTo(".section-indicator-container", {xPercent: 0}, {xPercent: 150}, "<")
+        .to(".can-text", {opacity: .6, paddingRight: 0}, "<")
+        .fromTo(mainRef.current, {filter: "blur(0px)"}, {filter: "blur(10px)"}, "<")
+        .fromTo(".work-text", {clipPath: "inset(50% 0 50% 0)"}, {clipPath: isMobile? "inset(45% 0 45% 0)" : "inset(40% 0 40% 0)"}, "<")
+        .from(workRef.current, {xPercent: 150}, "<.3")  
+    })
+
     const heroSplit = new SplitText(".title", {type: 'chars, words'});
     gsap.set(".animation-showup", {opacity: 0, y: "+=25"});
     gsap.set(heroSplit.chars, {opacity: 0, yPercent: 100});
@@ -30,7 +58,7 @@ function App() {
     .fromTo("#welcoming-text", {opacity: 0}, {opacity: 1, delay: .5, duration: 2})
     .to("#welcoming-text", {scale: 1.5, duration: 1, ease: "power1.inOut"})
     .to("#welcoming-text", {y: "100vw", delay: .5, duration: 1, ease: "power2.out"})
-    .fromTo(".navbar-container", {y: "+=25"}, {opacity:1, y: "-=25", delay: .25, duration: 1})
+    .fromTo(".section-indicator-container", {y: "+=25"}, {opacity:1, y: "-=25", delay: .25, duration: 1})
     .to(".welcoming-container", {opacity: 0, duration: 1, onComplete: () => {gsap.set(".welcoming-container", {display: "none"})}}, "<")
     .to(heroSplit.chars, {opacity: 1, yPercent: 0, duration: 1, ease: "expo.out", stagger: .06}, "<")
     .to(".animation-showup",  {opacity: 1, y: "-=25", duration: 1}, "<");
@@ -86,24 +114,6 @@ function App() {
       .to(".here-text", {opacity: .6, paddingRight: 0}, "<")
       .to(".can-text", {opacity: 1, paddingRight: 40}, "<")
       .from(".skill-card-text", {opacity: 0, yPercent: 50, stagger: .05}, "<.2");
-
-    // Main out, Work in
-    const workInTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: document.body,
-        start: "2400 top",
-        end: "+=800",
-        scrub: 1,
-      }
-    })
-
-    workInTl
-      .to(mainRef.current, {scale: .9})
-      .to(".navbar-container", {xPercent: 150}, "<")
-      .to(".can-text", {opacity: .6, paddingRight: 0}, "<")
-      .fromTo(mainRef.current, {filter: "blur(0px)"}, {filter: "blur(10px)"}, "<")
-      .fromTo(".work-text", {clipPath: "inset(50% 0 50% 0)"}, {clipPath: "inset(40% 0 40% 0)"}, "<")
-      .from(workRef.current, {xPercent: 150}, "<.3")  
     
     // work scroll
     const workTl = gsap.timeline({
@@ -126,6 +136,8 @@ function App() {
     workTl
       .to(".work-container", {xPercent: -100})
       .to(mainRef.current, {opacity: 0, duration: .05}, "<")
+
+    return () => mm.revert();
   }, [])
 
   return (
@@ -133,7 +145,7 @@ function App() {
       <div className="welcoming-container min-h-screen w-full bg-dark fixed z-51 flex justify-center items-center text-2xl font-sans">
         <p id="welcoming-text">Get Ready!!</p>
       </div>
-      <Navbar />
+      <SectionIndicator />
       <div className="fixed z-47" ref={heroRef}>
         <Hero />
       </div>
@@ -141,7 +153,7 @@ function App() {
         <div className="overlay-white absolute h-full w-full scale-200 bg-light"></div>
         <Main />
       </div>
-      <div className="work-text min-h-screen w-full bg-light fixed z-49 font-sans font-bold text-8xl text-dark flex justify-center items-center">
+      <div className="work-text min-h-screen w-full bg-light fixed z-49 font-sans font-bold lg:text-8xl text-4xl text-dark flex justify-center items-center">
         {workText}
       </div>
       <div className="fixed z-50" ref={workRef}>
