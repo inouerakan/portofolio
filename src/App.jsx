@@ -153,7 +153,7 @@ function App() {
         <div className="overlay-white absolute h-full w-full scale-200 bg-light"></div>
         <Main />
       </div>
-      <div className="work-text min-h-screen w-full bg-light fixed z-49 font-sans font-bold lg:text-8xl text-4xl text-dark flex justify-center items-center">
+      <div className="work-text min-h-screen w-full bg-light fixed z-49 font-sans font-bold lg:text-8xl md:text-5xl sm:text-3xl text-dark flex justify-center items-center">
         {workText}
       </div>
       <div className="fixed z-50" ref={workRef}>
