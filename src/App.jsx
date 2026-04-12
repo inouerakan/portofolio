@@ -142,8 +142,8 @@ function App() {
   }, [])
 
   return (
-    <div className="h-[800vh] w-full bg-dark text-light font-serif">
-      <div className="welcoming-container min-h-screen w-full bg-dark fixed z-51 flex justify-center items-center text-2xl font-sans">
+    <div className="md:h-1400 h-800 w-full bg-dark text-light font-serif">
+      <div className="welcoming-container h-svh w-full bg-dark fixed z-51 flex justify-center items-center text-2xl font-sans">
         <p id="welcoming-text">Get Ready!!</p>
       </div>
       <SectionIndicator />
