@@ -23,7 +23,6 @@ function App() {
     ScrollTrigger.normalizeScroll({
       allowNestedScroll: true,
       lockAxis: true,
-      momentum: (self) => Math.min(3, self.v)
     })
 
     let mm = gsap.matchMedia();
