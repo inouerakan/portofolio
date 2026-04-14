@@ -20,6 +20,13 @@ function App() {
   const workRef = useRef();
 
   useGSAP(() => {
+    ScrollTrigger.normalizeScroll({
+      allowNestedScroll: true,
+      lockAxis: true,
+      momentum: (self) => Math.min(3, self.v)
+    })
+    ScrollTrigger.config({ignoreMobileResize: true});
+
     let mm = gsap.matchMedia();
     mm.add({
       isMobile: "(max-width: 767px)",
@@ -143,7 +150,7 @@ function App() {
 
   return (
     <div className="md:h-1400 h-800 w-full bg-dark text-light font-serif">
-      <div className="welcoming-container h-dvh w-full bg-dark fixed z-51 flex justify-center items-center text-2xl font-sans">
+      <div className="welcoming-container h-svh w-full bg-dark fixed z-51 flex justify-center items-center text-2xl font-sans">
         <p id="welcoming-text">Get Ready!!</p>
       </div>
       <SectionIndicator />
