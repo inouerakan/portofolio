@@ -25,7 +25,6 @@ function App() {
       lockAxis: true,
       momentum: (self) => Math.min(3, self.v)
     })
-    ScrollTrigger.config({ignoreMobileResize: true});
 
     let mm = gsap.matchMedia();
     mm.add({
